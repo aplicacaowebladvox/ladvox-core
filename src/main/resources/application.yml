@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /projeto-fono/api
+
+spring:
+  application:
+    name: projeto-fono-core
+  profiles:
+    active:
+      - local
+  jpa:
+    open-in-view: false
+    properties:
+      '[hypersistence.utils.enable_types_contributor]': false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /projeto-fono/api
+
+spring:
+  application:
+    name: projeto-fono-core
+  jpa:
+    open-in-view: false
+    properties:
+      '[hypersistence.utils.enable_types_contributor]': false
+      hibernate:
+        boot:
+          allow_jdbc_metadata_access: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://${DB_URL:}:5432/${DB_NAME:}
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME:}
+    password: ${DB_PASSWORD:}
+
+
+security:
+  jwt:
+    secret-key: e3223d5de45fc043b4b505f3a26912959b8e018dfa1d4ec38135b93ee393fb0c
+    expiration-time: 300000
+    refresh-token-expiration-time: 1800000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
