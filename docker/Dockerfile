@@ -1,17 +1,25 @@
-FROM eclipse-temurin:21-jdk-alpine
+FROM eclipse-temurin:21-jdk-alpine AS build
 
-ARG PROFILE
-ARG DB_NAME
-ARG DB_USERNAME
-ARG DB_PASSWORD
-ARG DB_URL
+WORKDIR /app
 
-ENV SPRING_PROFILES_ACTIVE=$PROFILE
-ENV DB_NAME=$DB_NAME
-ENV DB_USERNAME=$DB_USERNAME
-ENV DB_PASSWORD=$DB_PASSWORD
-ENV DB_URL=$DB_URL
+COPY pom.xml .
+COPY .mvn .mvn
+COPY mvnw .
+
+RUN chmod +x mvnw
+RUN ./mvnw dependency:go-offline
+
+COPY src src
+
+RUN ./mvnw clean package -DskipTests
+
+
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
-ADD /projeto-fono-*.jar projeto-fono.jar
-ENTRYPOINT ["java", "-jar", "projeto-fono.jar"]
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
