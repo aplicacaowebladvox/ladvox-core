@@ -61,7 +61,7 @@ public class ValidationUtils {
 	public static boolean password( String password ) {
 		if( password == null || password.length() < 8 )
 			return false;
-		return password.matches( "^(?!.*(.)\\1\\1)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[`~!@#$%^&*()_+={}\\[\\]|\\\\:;\"'<>,.?\\/])[a-zA-Z\\d`~!@#$%^&*()_+={}\\[\\]|\\\\:;\"'<>,.?\\/]{6,10}$" );
+		return password.matches( "^(?!.*(.)\\1\\1)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[`~!@#$%^&*()_+={}\\[\\]|\\\\:;\"'<>,.?\\/])[a-zA-Z\\d`~!@#$%^&*()_+={}\\[\\]|\\\\:;\"'<>,.?\\/]{6,15}$" );
 	}
 
 	public static boolean phone( String phone ) {

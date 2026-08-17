@@ -50,8 +50,7 @@ public class SecurityConfiguration {
 
 		configuration.addAllowedOrigin( "http://localhost:8080/" );
 		configuration.addAllowedOrigin( "http://localhost:4200/" );
-		configuration.addAllowedOrigin( "https://d3dsqwsb93lpxc.cloudfront.net/" );
-		configuration.addAllowedOrigin( "http://ladvox-front.s3-website-us-east-1.amazonaws.com/" );
+		configuration.addAllowedOrigin( "https://ladvox-web.vercel.app/" );
 		configuration.setAllowedMethods( List.of( "GET", "POST", "PATCH", "PUT", "DELETE" ) );
 		configuration.setAllowedHeaders( List.of( "Authorization", "Content-Type" ) );
 
