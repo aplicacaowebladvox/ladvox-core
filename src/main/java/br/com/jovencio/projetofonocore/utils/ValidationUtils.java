@@ -59,7 +59,7 @@ public class ValidationUtils {
 	}
 
 	public static boolean password( String password ) {
-		if( password == null || password.length() < 8 )
+		if( password == null || password.length() < 6 )
 			return false;
 		return password.matches( "^(?!.*(.)\\1\\1)(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[`~!@#$%^&*()_+={}\\[\\]|\\\\:;\"'<>,.?\\/])[a-zA-Z\\d`~!@#$%^&*()_+={}\\[\\]|\\\\:;\"'<>,.?\\/]{6,15}$" );
 	}

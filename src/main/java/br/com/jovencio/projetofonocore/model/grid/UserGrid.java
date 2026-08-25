@@ -32,7 +32,7 @@ public class UserGrid {
 		this.id = user.getId();
 		this.name = user.getName();
 		this.document = user.getDocument();
-		this.roles = Optional.ofNullable( user.getRoles() ).orElse( Collections.emptyList() ).stream().map( Role::getName ).toList();
+		this.roles = Optional.ofNullable( user.getRoles() ).orElse( Collections.emptyList() ).stream().map( Role::getName ).distinct().toList();
 		this.inacinactivationUserId = user.getInacinactivationUser() != null ? user.getInacinactivationUser().getId() : null;
 		this.inactivationDate = user.getInactivationDate() != null ? user.getInactivationDate() : null;
 		this.inacinactivationUserName = user.getInacinactivationUser() != null ? user.getInacinactivationUser().getName() : null;
