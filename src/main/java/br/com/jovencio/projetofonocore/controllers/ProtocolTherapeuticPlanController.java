@@ -20,7 +20,7 @@ public class ProtocolTherapeuticPlanController {
 	private final ProtocolTherapeuticPlanService service;
 
 	@PostMapping( "/search" )
-	@PostAuthorize( "hasAuthority('paciente.historico-protocolo.view')" )
+	@PostAuthorize( "hasAnyAuthority('protocolo.protocolo.view', 'paciente.historico-protocolo.view')" )
 	public ResponseEntity<SearchReturnDTO<ProtocolTherapeuticPlanGrid>> search( @RequestBody ProtocolTherapeuticPlanGridOptions options ) {
 		return ResponseEntity.ok( service.search( options ) );
 	}
@@ -32,7 +32,7 @@ public class ProtocolTherapeuticPlanController {
 	}
 
 	@GetMapping( "/{id}" )
-	@PostAuthorize( "hasAnyAuthority('Paciente', 'paciente-view.paciente', 'paciente.historico-protocolo.view')" )
+	@PostAuthorize( "hasAnyAuthority('Paciente', 'paciente-view.paciente', 'paciente.historico-protocolo.view', 'atendimento.plano-terapeutico.protocolo-repondido-view')" )
 	public ResponseEntity<ProtocolTherapeuticPlanDTO> getById( @PathVariable Long id ) {
 		return ResponseEntity.ok( service.get( id ) );
 	}

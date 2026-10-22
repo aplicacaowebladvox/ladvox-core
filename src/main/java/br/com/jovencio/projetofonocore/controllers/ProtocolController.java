@@ -31,7 +31,7 @@ public class ProtocolController {
 	}
 
 	@GetMapping( "/{id}/my-data" )
-	@PostAuthorize( "hasAuthority('paciente-view.paciente')" )
+	@PostAuthorize( "hasAnyAuthority('paciente-view.paciente', 'protocolo.protocolo.form.new', 'protocolo.protocolo.form.edit')" )
 	public ResponseEntity<MyProtocolDTO> getMyDataById( @PathVariable Long id ) {
 		return ResponseEntity.ok( service.getMyDataById( id ) );
 	}
@@ -74,7 +74,7 @@ public class ProtocolController {
 	}
 
 	@GetMapping( "/select-options" )
-	@PostAuthorize( "hasAnyAuthority('paciente.historico-protocolo.view')" )
+	@PostAuthorize( "hasAnyAuthority('protocolo.protocolo.view', 'paciente.historico-protocolo.view')" )
 	public ResponseEntity<List<SelectOptionDTO<Long, String>>> getSelectOptions() {
 		return ResponseEntity.ok( service.getSelectOptions() );
 	}

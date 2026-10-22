@@ -60,13 +60,13 @@ public class TherapeuticPlanController {
 	}
 
 	@GetMapping( "/{id}/text" )
-	@PostAuthorize( "hasAuthority('atendimento.plano-terapeutico.form.edit')" )
+	@PostAuthorize( "hasAnyAuthority('atendimento.plano-terapeutico.view')" )
 	public ResponseEntity<TherapeuticTextPlanDTO> getTherapeuticTextPlan( @PathVariable long id ) {
 		return ResponseEntity.ok( service.getTherapeuticTextPlan( id ) );
 	}
 
 	@PatchMapping( "/{id}/text" )
-	@PostAuthorize( "hasAuthority('atendimento.plano-terapeutico.form.edit')" )
+	@PostAuthorize( "hasAuthority('atendimento.plano-terapeutico.form')" )
 	public ResponseEntity<?> updateTherapeuticTextPlan( @PathVariable long id, @RequestBody TherapeuticTextPlanDTO dto ) {
 		service.updateTherapeuticTextPlan( id, dto );
 		return ResponseEntity.ok().build();

@@ -24,14 +24,14 @@ public class TherapeuticPlanCommentController {
 	}
 
 	@PatchMapping( "/therapeutic-plan/{therapeuticPlanId}" )
-	@PostAuthorize( "hasAnyAuthority('atendimento.plano-terapeutico.comentario.novo', 'atendimento.plano-terapeutico.comentario.admin')" )
+	@PostAuthorize( "hasAnyAuthority('atendimento.plano-terapeutico.comentario.new')" )
 	public ResponseEntity<?> newComment( @PathVariable long therapeuticPlanId, @RequestBody TherapeuticPlanTextCommentDTO dto ) {
 		service.newComment( therapeuticPlanId, dto );
 		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping( "/{id}" )
-	@PostAuthorize( "hasAnyAuthority('atendimento.plano-terapeutico.comentario.novo', 'atendimento.plano-terapeutico.comentario.excluir')" )
+	@PostAuthorize( "hasAnyAuthority('atendimento.plano-terapeutico.comentario.delete')" )
 	public ResponseEntity<?> deleteComment( @PathVariable long id ) {
 		service.delete( id );
 		return ResponseEntity.ok().build();
