@@ -26,13 +26,13 @@ public class ProtocolTherapeuticPlanController {
 	}
 
 	@PostMapping( "/search-my-protocols" )
-	@PostAuthorize( "hasAuthority('paciente-view.paciente')" )
+	@PostAuthorize( "hasAnyAuthority('Paciente', 'paciente-view.paciente')" )
 	public ResponseEntity<SearchReturnDTO<MyProtocolGrid>> searchMyProtocols( @RequestBody MyProtocolGridOptions options ) {
 		return ResponseEntity.ok( service.searchMyProtocols( options ) );
 	}
 
 	@GetMapping( "/{id}" )
-	@PostAuthorize( "hasAnyAuthority('paciente.historico-protocolo.view')" )
+	@PostAuthorize( "hasAnyAuthority('Paciente', 'paciente-view.paciente', 'paciente.historico-protocolo.view')" )
 	public ResponseEntity<ProtocolTherapeuticPlanDTO> getById( @PathVariable Long id ) {
 		return ResponseEntity.ok( service.get( id ) );
 	}
@@ -51,7 +51,7 @@ public class ProtocolTherapeuticPlanController {
 	}
 
 	@PatchMapping( "/{id}/answers" )
-	@PostAuthorize( "hasAuthority('paciente-view.paciente')" )
+	@PostAuthorize( "hasAnyAuthority('Paciente', 'paciente-view.paciente')" )
 	public ResponseEntity<?> saveAnswers( @PathVariable Long id, @RequestBody ProtocolTherapeuticPlanDTO dto ) {
 		service.saveAnswers( id, dto );
 		return ResponseEntity.ok().build();

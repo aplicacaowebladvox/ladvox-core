@@ -13,6 +13,7 @@ import br.com.jovencio.projetofonocore.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -78,13 +79,11 @@ public class UserController {
 	}
 
 	@PostMapping( "/{id}/profile-image" )
-	@PostAuthorize( "hasAuthority('controle-acesso.usuarios.form.edit')" )
 	public ResponseEntity<AttachmentDTO> saveProfileImage( @PathVariable UUID id, @RequestBody AttachmentDTO dto ) {
 		return ResponseEntity.ok( service.saveProfileImage( id, dto ) );
 	}
 
 	@GetMapping( "/profile-image" )
-	@PostAuthorize( "hasAuthority('controle-acesso.usuarios.form.edit')" )
 	public ResponseEntity<AttachmentDTO> getProfileImage() {
 		return ResponseEntity.ok( service.getProfileImage() );
 	}

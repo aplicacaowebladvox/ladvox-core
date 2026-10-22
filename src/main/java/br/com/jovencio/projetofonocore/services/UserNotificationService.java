@@ -28,10 +28,18 @@ public class UserNotificationService {
 
 	public List<UserNotificationDTO> findAllByLoggedUser( Integer amountOfNotifications ) {
 		amountOfNotifications = Optional.ofNullable( amountOfNotifications ).orElse( 10 );
-		if( authComponent.getUserDTO().getRoles().contains( "Paciente" ) ) {
+		if( authComponent.getUserDTO().getRoles().stream().anyMatch( r -> r.getName().equalsIgnoreCase( "Paciente" ) ) ) {
 			return repository.findAllByUserIdAndForPatientIsTrue( authComponent.getUserDTO().getId(), amountOfNotifications ).stream().map( ModelMapperUtils::map ).toList();
 		}
 		return repository.findAllByUserId( authComponent.getUserDTO().getId(), amountOfNotifications ).stream().map( ModelMapperUtils::map ).toList();
+	}
+
+	public List<String> findAllOfPatient() {
+		return repository.findAllByUserIdAndIsPatientAndIsOnlyUnreadLimitedBy( authComponent.getUserDTO().getId(), true, true, 11 ).stream().map( UserNotification::getNotification ).toList();
+	}
+
+	public List<String> findAllNotPatient() {
+		return repository.findAllByUserIdAndIsPatientAndIsOnlyUnreadLimitedBy( authComponent.getUserDTO().getId(), false, true, 11 ).stream().map( UserNotification::getNotification ).toList();
 	}
 
 	public void notifyNewProtocolRequested( long protocolTherapeuticPlanId ) {
@@ -57,7 +65,9 @@ public class UserNotificationService {
 			entity.setOutEntityProtocolTherapeuticPlan( protocolTherapeuticPlanId );
 			repository.save( entity );
 		}
-
+		var notifications = repository.findAllByOutEntity( "ProtocolTherapeuticPlan=" + protocolTherapeuticPlanId );
+		notifications.forEach( userNotification -> userNotification.setMarkAsRead( true ) );
+		repository.saveAll( notifications );
 	}
 
 	public void markAsRead( long id ) {

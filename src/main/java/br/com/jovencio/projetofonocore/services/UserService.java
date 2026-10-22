@@ -31,6 +31,7 @@ public class UserService {
 	private final IPatientRepository patientRepository;
 	private final AuthComponent authComponent;
 	private final AttachmentService attachmentService;
+	private final UserNotificationService userNotificationService;
 
 	public List<ChooseableUserRoleDTO> mountChooseableRole() {
 		var user = userRepository.findById( authComponent.getUserDTO().getId() ).orElseThrow();
@@ -39,10 +40,10 @@ public class UserService {
 		var isPatient = user.getRoles().stream().anyMatch( Role::isPatient );
 		var isOtherUser = user.getRoles().stream().anyMatch( role -> !role.isPatient() );
 		if( isPatient ) {
-			patientChoice = ChooseableUserRoleDTO.builder().code( "patient" ).roleName( "Paciente" ).notifications( new ArrayList<>() ).build();
+			patientChoice = ChooseableUserRoleDTO.builder().code( "patient" ).roleName( "Paciente" ).notifications( userNotificationService.findAllOfPatient() ).build();
 		}
 		if( isOtherUser ) {
-			final var innerGeneralChoice = ChooseableUserRoleDTO.builder().code( "general" ).otherRoles( new ArrayList<>() ).notifications( new ArrayList<>() ).build();
+			final var innerGeneralChoice = ChooseableUserRoleDTO.builder().code( "general" ).otherRoles( new ArrayList<>() ).notifications( userNotificationService.findAllNotPatient() ).build();
 			user.getRoles().stream().filter( role -> !role.isPatient() ).forEach( role -> {
 				if( innerGeneralChoice.getRoleName() == null && role.isShowOnLandingPage() ) {
 					innerGeneralChoice.setRoleName( role.getName() );

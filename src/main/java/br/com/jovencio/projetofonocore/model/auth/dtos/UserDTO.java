@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Getter
 @Setter
@@ -33,7 +35,7 @@ public class UserDTO implements UserDetails {
 
 	@Override
 	public List<PermissionDTO> getAuthorities() {
-		return roles.stream().flatMap( role -> role.getPermissions().stream() ).toList();
+		return roles.stream().flatMap( role -> Stream.concat( Stream.of( PermissionDTO.fromRole( role ) ), role.getPermissions().stream() ) ).collect( Collectors.toSet() ).stream().toList();
 	}
 
 	@Override
